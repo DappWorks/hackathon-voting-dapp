@@ -4,7 +4,7 @@ A dapp built to showcase web3 usage at the DappWorks Hackathon.
 
 ## How It Was Built
 
-This project is based off of [Truffle React box](https://github.com/truffle-box/react-box) which in turn uses [Create React App](https://github.com/facebook/create-react-app).
+This project is based off of [Truffle React box](https://github.com/truffle-box/react-box) which in turn uses [Create React App](https://github.com/facebook/create-react-app). It uses [Ant Design](https://ant.design/) for design.
 
 To build this yourself, install `npm` and `truffle`.
 
