@@ -19,7 +19,7 @@ contract('HackathonVoting', function(accounts) {
   async function deployContract() {
     debug('deploying contract')
 
-    this.voting = await HackathonVoting.new();
+    this.voting = await HackathonVoting.new()
   }
 
   describe('Initial state', function() {
@@ -37,13 +37,13 @@ contract('HackathonVoting', function(accounts) {
 
     it('should be able to submit team', async function() {
       eq((await this.voting.totalTeams.call()).toNumber(), 0)
-      await this.voting.submitTeam("Team Name", "https://github.com/123");
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
       eq((await this.voting.totalTeams.call()).toNumber(), 1)
     })
 
     it('should not be able to submit more than one team', async function() {
       eq((await this.voting.totalTeams.call()).toNumber(), 0)
-      await this.voting.submitTeam("Team Name", "https://github.com/123");
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
       eq((await this.voting.totalTeams.call()).toNumber(), 1)
       await util.expectThrow(this.voting.submitTeam("Team Name 2", "https://github.com/456"))
       eq((await this.voting.totalTeams.call()).toNumber(), 1)
@@ -54,7 +54,7 @@ contract('HackathonVoting', function(accounts) {
     beforeEach(deployContract)
 
     it('should be able to submit team', async function() {
-      await this.voting.submitTeam("Team Name", "https://github.com/123");
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
 
       const team = await this.voting.getTeam.call(1)
 
@@ -77,6 +77,38 @@ contract('HackathonVoting', function(accounts) {
       eq(usefulness.toNumber(), 0)
       eq(general.toNumber(), 0)
       eq(totalPoints.toNumber(), 0)
+    })
+  })
+
+  describe('Vote', function() {
+    beforeEach(deployContract)
+
+    it('should be able to vote', async function() {
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
+
+      await this.voting.vote(1, 7, 6, 9, 4)
+    })
+
+    it('should not be able to vote more than once for a team', async function() {
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
+
+      await this.voting.vote(1, 7, 6, 9, 4)
+      await util.expectThrow(this.voting.vote(1, 7, 6, 9, 4))
+    })
+
+    it('should be able to award 10 points per category', async function() {
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
+
+      await this.voting.vote(1, 10, 10, 10, 10)
+    })
+
+    it('should not be able to award more than 10 points per category', async function() {
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
+
+      await util.expectThrow(this.voting.vote(1, 11, 6, 9, 4))
+      await util.expectThrow(this.voting.vote(1, 10, 11, 9, 4))
+      await util.expectThrow(this.voting.vote(1, 10, 6, 11, 4))
+      await util.expectThrow(this.voting.vote(1, 10, 6, 9, 11))
     })
   })
 })

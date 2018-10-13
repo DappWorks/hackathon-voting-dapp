@@ -42,6 +42,7 @@ contract HackathonVoting is Ownable, Debuggable {
   uint8 constant CREATIVITY_WEIGHTING = 3;
   uint8 constant USEFULNESS_WEIGHTING = 1;
   uint8 constant GENERAL_WEIGHTING = 3;
+  uint8 constant MAX_POINTS_PER_CATEGORY = 10;
 
   constructor() public {
     // team 0 is blank
@@ -93,6 +94,12 @@ contract HackathonVoting is Ownable, Debuggable {
     Team storage team = teams[_teamId];
 
     require(!team.voters[msg.sender], "This address has already voted for this team");
+    require(
+      _technical <= MAX_POINTS_PER_CATEGORY &&
+      _creativity <= MAX_POINTS_PER_CATEGORY &&
+      _usefulness <= MAX_POINTS_PER_CATEGORY &&
+      _general <= MAX_POINTS_PER_CATEGORY
+    , "You cannot award this number of points");
 
     team.voters[msg.sender] = true;
 
