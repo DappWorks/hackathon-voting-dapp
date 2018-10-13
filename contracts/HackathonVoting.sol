@@ -1,8 +1,9 @@
 pragma solidity ^0.4.24;
 
+import "./Debuggable.sol";
 import "./OpenZeppelin/Ownable.sol";
 
-contract HackathonVoting is Ownable {
+contract HackathonVoting is Ownable, Debuggable {
   event Voted(
     address indexed _voter,
     uint indexed _teamId,
@@ -47,6 +48,10 @@ contract HackathonVoting is Ownable {
     _createTeam("", "", address(0));
   }
 
+  function totalTeams() public view returns (uint) {
+    return teams.length - 1;
+  }
+
   function submitTeam(string _name, string _github) public returns (uint) {
     // each address may only submit one team
     require(submitterToTeamId[msg.sender] == 0, "You have already submitted a team");
@@ -56,7 +61,7 @@ contract HackathonVoting is Ownable {
 
     emit TeamCreated(teamId, submitter, _name, _github);
 
-    return teamId;
+    return 1;
   }
 
   function _createTeam(string _name, string _github, address _submitter) private returns (uint) {
@@ -71,7 +76,7 @@ contract HackathonVoting is Ownable {
       totalPoints: 0
     });
 
-    uint teamId = teams.push(team);
+    uint teamId = teams.push(team) - 1;
 
     submitterToTeamId[msg.sender] = teamId;
 
@@ -111,7 +116,7 @@ contract HackathonVoting is Ownable {
     uint8 _creativity,
     uint8 _usefulness,
     uint8 _general
-  ) private view returns (uint8) {
+  ) private pure returns (uint8) {
     return (_technical * TECHNICAL_WEIGHTING) +
       (_creativity * CREATIVITY_WEIGHTING) +
       (_usefulness * USEFULNESS_WEIGHTING) +
@@ -144,5 +149,27 @@ contract HackathonVoting is Ownable {
     }
 
     return winningTeamId;
+  }
+
+  function getTeam(uint _teamId) public view returns (
+    address submitter,
+    string name,
+    string github,
+    uint8 technical,
+    uint8 creativity,
+    uint8 usefulness,
+    uint8 general,
+    uint8 totalPoints
+  ) {
+    Team memory team = teams[_teamId];
+
+    submitter = team.submitter;
+    name = team.name;
+    github = team.github;
+    technical = team.technical;
+    creativity = team.creativity;
+    usefulness = team.usefulness;
+    general = team.general;
+    totalPoints = team.totalPoints;
   }
 }
