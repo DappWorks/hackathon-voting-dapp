@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
 import MainLayout from "./layouts/MainLayout";
-
+import Teams from "./routes/Teams";
+import Vote from "./routes/Vote";
+import Sponsors from "./routes/Sponsors";
 import "./App.css";
 
 class App extends Component {
@@ -66,7 +69,14 @@ class App extends Component {
       //   </p>
       //   <div>The stored value is: {this.state.storageValue}</div>
       // </div>
-      <MainLayout>Content</MainLayout>
+      <Router>
+        <MainLayout>
+          <Route exact path="/" component={Teams} />
+          <Route path="/teams" component={Teams} />
+          <Route path="/vote" component={Vote} />
+          <Route path="/sponsors" component={Sponsors} />
+        </MainLayout>
+      </Router>
     );
   }
 }

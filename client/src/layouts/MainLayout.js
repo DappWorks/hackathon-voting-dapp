@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Menu } from 'antd'
+import { Link } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout
 
@@ -22,13 +23,13 @@ export default class MainLayout extends Component {
             defaultSelectedKeys={['1']}
             style={{ lineHeight: '64px' }}
           >
-            <Menu.Item key="1">Teams</Menu.Item>
-            <Menu.Item key="2">Vote</Menu.Item>
-            <Menu.Item key="3">Sponsors</Menu.Item>
+            <Menu.Item key="1"><Link to={`/`}>Teams</Link></Menu.Item>
+            <Menu.Item key="2"><Link to={`/vote`}>Vote</Link></Menu.Item>
+            <Menu.Item key="3"><Link to={`/sponsors`}>Sponsors</Link></Menu.Item>
           </Menu>
         </Header>
         <Content style={{ padding: '0 50px' }}>
-          <div style={{ background: '#fff', padding: 24, minHeight: 280, margin: '16px 0' }}>
+          <div style={{ background: '#fff', padding: 24, minHeight: 600, margin: '16px 0' }}>
             {this.props.children}
           </div>
         </Content>
