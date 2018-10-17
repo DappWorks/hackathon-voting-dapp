@@ -4,6 +4,6 @@
     "rimraf": "^2.6.2"
   },
   "scripts": {
-    "truffle:migrate": "rimraf build && truffle migrate --reset && cd client && yarn run-script-os"
+    "truffle:migrate": "rimraf build && truffle migrate --reset"
   }
 }
