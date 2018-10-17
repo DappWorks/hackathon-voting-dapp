@@ -8,6 +8,7 @@ import Teams from "./routes/Teams";
 import SubmitTeam from './routes/SubmitTeam'
 import Vote from "./routes/Vote";
 import Sponsors from "./routes/Sponsors";
+import Activity from "./routes/Activity";
 import "./App.css";
 
 class App extends Component {
@@ -43,6 +44,7 @@ class App extends Component {
   renderSubmitTeam = () => <SubmitTeam {...this.state} />
   renderVote = () => <Vote {...this.state} />
   renderSponsors = () => <Sponsors {...this.state} />
+  renderActivity = () => <Activity {...this.state} />
 
   render() {
     if (!this.state.web3) {
@@ -55,6 +57,7 @@ class App extends Component {
           <Route path="/submit-team" render={this.renderSubmitTeam} />
           <Route path="/vote" render={this.renderVote} />
           <Route path="/sponsors" render={this.renderSponsors} />
+          <Route path="/activity" render={this.renderActivity} />
         </MainLayout>
       </Router>
     );
