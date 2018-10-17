@@ -1,5 +1,9 @@
 {
   "devDependencies": {
-    "debug": "^4.1.0"
+    "debug": "^4.1.0",
+    "rimraf": "^2.6.2"
+  },
+  "scripts": {
+    "truffle:migrate": "rimraf build && truffle migrate --reset && cd client && yarn run-script-os"
   }
 }
