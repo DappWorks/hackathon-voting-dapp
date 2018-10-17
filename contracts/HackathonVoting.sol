@@ -54,15 +54,17 @@ contract HackathonVoting is Ownable, Debuggable {
   }
 
   function submitTeam(string _name, string _github) public returns (uint) {
+    // XXX allowing multiple submissions from a single address as demoing was annoying otherwise :(
+
     // each address may only submit one team
-    require(submitterToTeamId[msg.sender] == 0, "You have already submitted a team");
+    // require(submitterToTeamId[msg.sender] == 0, "You have already submitted a team");
 
     address submitter = msg.sender;
     uint teamId = _createTeam(_name, _github, submitter);
 
     emit TeamCreated(teamId, submitter, _name, _github);
 
-    return 1;
+    return teamId;
   }
 
   function _createTeam(string _name, string _github, address _submitter) private returns (uint) {

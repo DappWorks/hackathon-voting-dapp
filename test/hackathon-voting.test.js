@@ -41,13 +41,13 @@ contract('HackathonVoting', function(accounts) {
       eq((await this.voting.totalTeams.call()).toNumber(), 1)
     })
 
-    it('should not be able to submit more than one team', async function() {
-      eq((await this.voting.totalTeams.call()).toNumber(), 0)
-      await this.voting.submitTeam("Team Name", "https://github.com/123")
-      eq((await this.voting.totalTeams.call()).toNumber(), 1)
-      await util.expectThrow(this.voting.submitTeam("Team Name 2", "https://github.com/456"))
-      eq((await this.voting.totalTeams.call()).toNumber(), 1)
-    })
+    // it('should not be able to submit more than one team', async function() {
+    //   eq((await this.voting.totalTeams.call()).toNumber(), 0)
+    //   await this.voting.submitTeam("Team Name", "https://github.com/123")
+    //   eq((await this.voting.totalTeams.call()).toNumber(), 1)
+    //   await util.expectThrow(this.voting.submitTeam("Team Name 2", "https://github.com/456"))
+    //   eq((await this.voting.totalTeams.call()).toNumber(), 1)
+    // })
   })
 
   describe('Get team', function() {
