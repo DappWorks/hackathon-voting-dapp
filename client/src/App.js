@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import HackathonVotingContract from "./contracts/HackathonVoting.json";
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
 import MainLayout from "./layouts/MainLayout";
 import Teams from "./routes/Teams";
+import SubmitTeam from './routes/SubmitTeam'
 import Vote from "./routes/Vote";
 import Sponsors from "./routes/Sponsors";
 import "./App.css";
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  state = { web3: null, accounts: null, contract: null };
 
   componentDidMount = async () => {
     try {
@@ -21,60 +22,39 @@ class App extends Component {
       const accounts = await web3.eth.getAccounts();
 
       // Get the contract instance.
-      const Contract = truffleContract(SimpleStorageContract);
+      const Contract = truffleContract(HackathonVotingContract);
       Contract.setProvider(web3.currentProvider);
       const instance = await Contract.deployed();
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       // this.setState({ web3, accounts, contract: instance }, this.runExample);
-      this.setState({ web3, accounts, contract: instance });
+      this.setState({ web3, accounts, contract: instance }, this.getTeams);
     } catch (error) {
       // Catch any errors for any of the above operations.
+      console.error(error);
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
       );
-      console.log(error);
     }
   };
 
-  // runExample = async () => {
-  //   const { accounts, contract } = this.state;
-
-  //   // Stores a given value, 5 by default.
-  //   await contract.set(5, { from: accounts[0] });
-
-  //   // Get the value from the contract to prove it worked.
-  //   const response = await contract.get();
-
-  //   // Update state with the result.
-  //   this.setState({ storageValue: response.toNumber() });
-  // };
+  renderTeams = () => <Teams {...this.state} />
+  renderSubmitTeam = () => <SubmitTeam {...this.state} />
+  renderVote = () => <Vote {...this.state} />
+  renderSponsors = () => <Sponsors {...this.state} />
 
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
-      // <div className="App">
-      //   <h1>Good to Go!</h1>
-      //   <p>Your Truffle Box is installed and ready.</p>
-      //   <h2>Smart Contract Example</h2>
-      //   <p>
-      //     If your contracts compiled and migrated successfully, below will show
-      //     a stored value of 5 (by default).
-      //   </p>
-      //   <p>
-      //     Try changing the value stored on <strong>line 37</strong> of App.js.
-      //   </p>
-      //   <div>The stored value is: {this.state.storageValue}</div>
-      // </div>
       <Router>
         <MainLayout>
-          <Route exact path="/" component={Teams} />
-          <Route path="/teams" component={Teams} />
-          <Route path="/vote" component={Vote} />
-          <Route path="/sponsors" component={Sponsors} />
+          <Route exact path="/" render={this.renderTeams} />
+          <Route path="/submit-team" render={this.renderSubmitTeam} />
+          <Route path="/vote" render={this.renderVote} />
+          <Route path="/sponsors" render={this.renderSponsors} />
         </MainLayout>
       </Router>
     );

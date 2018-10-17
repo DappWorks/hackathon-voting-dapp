@@ -53,7 +53,7 @@ contract('HackathonVoting', function(accounts) {
   describe('Get team', function() {
     beforeEach(deployContract)
 
-    it('should be able to submit team', async function() {
+    it('should be able to get team', async function() {
       await this.voting.submitTeam("Team Name", "https://github.com/123")
 
       const team = await this.voting.getTeam.call(1)
@@ -77,6 +77,16 @@ contract('HackathonVoting', function(accounts) {
       eq(usefulness.toNumber(), 0)
       eq(general.toNumber(), 0)
       eq(totalPoints.toNumber(), 0)
+    })
+
+    it('should be able to get total teams', async function() {
+      for (let i = 0; i < 5; i++) {
+        await this.voting.submitTeam("Team Name", "https://github.com/123", { from: accounts[i] })
+      }
+
+      const totalTeams = await this.voting.totalTeams()
+
+      eq(totalTeams.toNumber(), 5)
     })
   })
 
