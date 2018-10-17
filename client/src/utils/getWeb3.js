@@ -15,8 +15,9 @@ const getWeb3 = () =>
         console.log("Injected web3 detected.");
         resolve(web3);
       } else {
-        // Fallback to localhost if no web3 injection. We've configured this to
-        // use the development console's port by default.
+        // Fallback to localhost if no web3 injection.
+        // you should use infura here when deploying to production
+        // this will allow users to view data on the site even if they don't have metamask installed
         const provider = new Web3.providers.HttpProvider(
           "http://127.0.0.1:9545"
         );

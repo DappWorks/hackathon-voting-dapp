@@ -11,7 +11,7 @@ export default class Teams extends Component {
 
     const totalTeams = await contract.totalTeams()
 
-    console.log('totalTeams', totalTeams)
+    console.log('totalTeams', totalTeams.toNumber())
 
     for (let i = 1; i <= totalTeams; i++) {
       const team = await contract.getTeam(i)
