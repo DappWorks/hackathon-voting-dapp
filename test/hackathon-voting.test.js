@@ -121,4 +121,37 @@ contract('HackathonVoting', function(accounts) {
       await util.expectThrow(this.voting.vote(1, 10, 6, 9, 11))
     })
   })
+
+  describe.only('Total Points', function () {
+    beforeEach(deployContract)
+
+    it('should calculate points correctly', async function() {
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
+
+      await this.voting.vote(1, 7, 6, 9, 4)
+
+      const totalPoints = await this.voting.calculatePoints(1);
+
+      eq(totalPoints, 60)
+
+      const team = await this.voting.getTeam.call(1)
+
+      eq(team[7].toNumber(), 60)
+    })
+
+    it('should calculate points correctly with multiple votes', async function() {
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
+
+      await this.voting.vote(1, 7, 6, 9, 4)
+      await this.voting.vote(1, 10, 10, 10, 10, { from: accounts[1] })
+
+      const totalPoints = await this.voting.calculatePoints(1);
+
+      eq(totalPoints, 160)
+
+      const team = await this.voting.getTeam.call(1)
+
+      eq(team[7].toNumber(), 160)
+    })
+  })
 })

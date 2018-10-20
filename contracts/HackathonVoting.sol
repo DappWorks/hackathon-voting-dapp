@@ -108,13 +108,13 @@ contract HackathonVoting is Ownable, Debuggable {
     team.technical = team.technical + _technical;
     team.creativity = team.creativity + _creativity;
     team.usefulness = team.usefulness + _usefulness;
-    team.technical = team.technical + _general;
+    team.general = team.general + _general;
 
     team.totalPoints = calculatePointsFromStats(
       team.technical,
       team.creativity,
       team.usefulness,
-      team.technical
+      team.general
     );
 
     emit Voted(msg.sender, _teamId, _technical, _creativity, _usefulness, _general);
