@@ -1,6 +1,12 @@
 # Hackathon Voting Dapp
 
-A dapp built to showcase web3 usage at the DappWorks Hackathon.
+A dapp built to showcase web3 usage at a workshop in the DappWorks Hackathon.
+
+*Note:* This dapp was put together very quickly. There are likely many improvements that can be made.
+
+## Demo Video
+
+[![Demo](http://img.youtube.com/vi/0pg6G8mVbWE/0.jpg)](https://www.youtube.com/watch?v=0pg6G8mVbWE "Hackathon Voting Demo")
 
 ## How It Was Built
 
