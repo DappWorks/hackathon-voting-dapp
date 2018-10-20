@@ -25,9 +25,8 @@ export default class MainLayout extends Component {
           >
             <Menu.Item key="1"><Link to={`/`}>Teams</Link></Menu.Item>
             <Menu.Item key="2"><Link to={`/submit-team`}>Submit Team</Link></Menu.Item>
-            <Menu.Item key="3"><Link to={`/vote`}>Vote</Link></Menu.Item>
-            <Menu.Item key="4"><Link to={`/sponsors`}>Sponsors</Link></Menu.Item>
-            <Menu.Item key="5"><Link to={`/activity`}>Activity</Link></Menu.Item>
+            <Menu.Item key="3"><Link to={`/sponsors`}>Sponsors</Link></Menu.Item>
+            <Menu.Item key="4"><Link to={`/activity`}>Activity</Link></Menu.Item>
           </Menu>
         </Header>
         <Content style={{ padding: '0 50px' }}>

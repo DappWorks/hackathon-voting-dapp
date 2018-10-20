@@ -42,7 +42,6 @@ class App extends Component {
 
   renderTeams = () => <Teams {...this.state} />
   renderSubmitTeam = () => <SubmitTeam {...this.state} />
-  renderVote = () => <Vote {...this.state} />
   renderSponsors = () => <Sponsors {...this.state} />
   renderActivity = () => <Activity {...this.state} />
 
@@ -55,7 +54,6 @@ class App extends Component {
         <MainLayout>
           <Route exact path="/" render={this.renderTeams} />
           <Route path="/submit-team" render={this.renderSubmitTeam} />
-          <Route path="/vote" render={this.renderVote} />
           <Route path="/sponsors" render={this.renderSponsors} />
           <Route path="/activity" render={this.renderActivity} />
         </MainLayout>
