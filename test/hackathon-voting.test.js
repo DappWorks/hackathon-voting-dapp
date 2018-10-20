@@ -122,7 +122,7 @@ contract('HackathonVoting', function(accounts) {
     })
   })
 
-  describe.only('Total Points', function () {
+  describe('Total Points', function () {
     beforeEach(deployContract)
 
     it('should calculate points correctly', async function() {
@@ -137,6 +137,20 @@ contract('HackathonVoting', function(accounts) {
       const team = await this.voting.getTeam.call(1)
 
       eq(team[7].toNumber(), 60)
+    })
+    
+    it('should calculate points correctly 2', async function() {
+      await this.voting.submitTeam("Team Name", "https://github.com/123")
+
+      await this.voting.vote(1, 10, 6, 3, 8)
+
+      const totalPoints = await this.voting.calculatePoints(1);
+
+      eq(totalPoints, 75)
+
+      const team = await this.voting.getTeam.call(1)
+
+      eq(team[7].toNumber(), 75)
     })
 
     it('should calculate points correctly with multiple votes', async function() {
