@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Table } from 'antd'
+import { Table, Button, Row, Col } from 'antd'
 import VoteModal from './VoteModal'
 
 export default class Teams extends Component {
-  state = { teams: [] }
+  state = { teams: [], showPoints: false }
 
   componentDidMount = async () => {
     const teams = []
@@ -26,6 +26,10 @@ export default class Teams extends Component {
     console.log('teams', teams)
 
     this.setState({ teams })
+  }
+
+  showPoints = () => {
+    this.setState({ showPoints: true })
   }
 
   render() {
@@ -51,6 +55,13 @@ export default class Teams extends Component {
         key: 'submitter',
       },
       {
+        title: 'Points',
+        dataIndex: 'totalPoints',
+        key: 'totalPoints',
+        render: text =>
+          this.state.showPoints ? (text && text.toNumber()) || 0 : null,
+      },
+      {
         title: 'Vote',
         key: 'vote',
         render: (text, record) => <VoteModal {...record} {...this.props} />,
@@ -59,7 +70,22 @@ export default class Teams extends Component {
 
     return (
       <div>
-        <h2>Teams</h2>
+        <Row>
+          <Col span={18}>
+            <h2>Teams</h2>
+          </Col>
+          <Col span={6}>
+            {!this.state.showPoints ? (
+              <Button
+                type="primary"
+                style={{ float: 'right' }}
+                onClick={this.showPoints}
+              >
+                Reveal Points
+              </Button>
+            ) : null}
+          </Col>
+        </Row>
 
         <Table dataSource={this.state.teams} columns={columns} />
       </div>

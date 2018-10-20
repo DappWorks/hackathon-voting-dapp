@@ -148,7 +148,7 @@ class VoteModal extends React.Component {
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-          footer={[]}
+          footer={null}
         >
           {this.renderVoteForm()}
         </Modal>
