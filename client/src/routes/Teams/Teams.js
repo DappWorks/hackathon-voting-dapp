@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Table } from 'antd'
+import VoteModal from './VoteModal'
 
 export default class Teams extends Component {
   state = { teams: [] }
@@ -13,10 +14,13 @@ export default class Teams extends Component {
 
     console.log('totalTeams', totalTeams.toNumber())
 
+    // TODO the more efficient way to do this is to create a getTeams function that returns arrays of data
+    // you can't return an array of structs, but you can return multiple arrays with one for each field
+    // and then match up the data on the client
     for (let i = 1; i <= totalTeams; i++) {
       const team = await contract.getTeam(i)
 
-      teams.push({ ...team, key: team.submitter })
+      teams.push({ ...team, key: i, id: i })
     }
 
     console.log('teams', teams)
@@ -26,6 +30,11 @@ export default class Teams extends Component {
 
   render() {
     const columns = [
+      {
+        title: 'Id',
+        dataIndex: 'id',
+        key: 'id',
+      },
       {
         title: 'Name',
         dataIndex: 'name',
@@ -40,6 +49,11 @@ export default class Teams extends Component {
         title: 'Submitter',
         dataIndex: 'submitter',
         key: 'submitter',
+      },
+      {
+        title: 'Vote',
+        key: 'vote',
+        render: (text, record) => <VoteModal {...record} {...this.props} />,
       },
     ]
 
