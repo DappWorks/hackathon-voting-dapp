@@ -6,7 +6,7 @@ import truffleContract from "truffle-contract";
 import MainLayout from "./layouts/MainLayout";
 import Teams from "./routes/Teams";
 import SubmitTeam from './routes/SubmitTeam'
-import Vote from "./routes/Vote";
+//import Vote from "./routes/Vote";
 import Sponsors from "./routes/Sponsors";
 import Activity from "./routes/Activity";
 import "./App.css";
